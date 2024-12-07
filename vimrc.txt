@@ -1,0 +1,56 @@
+" 行番号を表示
+set number
+
+" シンタックスハイライトを有効化
+syntax on
+
+" インデントの自動調整
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+" 検索設定
+set ignorecase     " 大文字・小文字を区別しない
+set smartcase      " スマートケース検索
+set hlsearch       " 検索時にハイライト表示
+
+" カーソル位置を常に表示
+set cursorline
+
+" インサートモードで `jk` を押してノーマルモードに戻る
+inoremap jk <Esc>
+
+" 括弧やタグの自動補完設定
+inoremap { {}<Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap < <><Left>
+
+" HTMLタグ入力時の閉じタグ補完
+inoremap <buffer> <expr> <lt> '<'.(getline('.')[col('.')-2] =~ '\a' ? '>' . '</' . matchstr(getline('.'), '\a\+') . '>' . "\<Left>\<Left>" : '')
+
+" カラースキームを設定
+colorscheme desert
+
+" プラグイン管理設定
+call plug#begin('~/.vim/plugged')
+
+" コード補完
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ycm-core/YouCompleteMe'
+
+" 括弧やタグの自動補完
+Plug 'jiangmiao/auto-pairs'
+Plug 'mattn/emmet-vim'
+Plug 'alvan/vim-closetag'
+
+call plug#end()
+
+" ファイルタイプごとの設定
+autocmd FileType javascript,typescript setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType html,css EmmetInstall
+
+" 閉じタグ補完対象のファイルタイプ設定
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
