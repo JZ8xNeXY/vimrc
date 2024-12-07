@@ -38,18 +38,22 @@ call plug#begin('~/.vim/plugged')
 
 " コード補完
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ycm-core/YouCompleteMe'
 
 " 括弧やタグの自動補完
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
+Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
 " ファイルタイプごとの設定
 autocmd FileType javascript,typescript setlocal tabstop=2 shiftwidth=2 expandtab
 autocmd FileType html,css EmmetInstall
+autocmd FileType javascript,typescript,typescriptreact,javascriptreact,json,css,html setlocal formatprg=prettier
+
+" Prettierの自動フォーマット設定
+autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx :silent! CocCommand prettier.formatFile
 
 " 閉じタグ補完対象のファイルタイプ設定
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
