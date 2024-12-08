@@ -44,13 +44,15 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
 Plug 'pangloss/vim-javascript'
-
+Plug 'tell-k/vim-autopep8'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
 " ファイルタイプごとの設定
 autocmd FileType javascript,typescript setlocal tabstop=2 shiftwidth=2 expandtab
 autocmd FileType html,css EmmetInstall
 autocmd FileType javascript,typescript,typescriptreact,javascriptreact,json,css,html setlocal formatprg=prettier
+autocmd BufWritePre *.py execute ':Autopep8'
 
 " Prettierの自動フォーマット設定
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx :silent! CocCommand prettier.formatFile
